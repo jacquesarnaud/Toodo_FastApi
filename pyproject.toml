@@ -1,0 +1,22 @@
+[project]
+name = "todoo-fastapi"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "jacquesarnaud", email = "jaarnaud4@gmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "alembic>=1.20.0",
+    "fastapi[standard]>=0.141.1",
+    "psycopg2-binary>=2.9.13",
+    "sqlalchemy>=2.0.54",
+]
+
+[project.scripts]
+todoo-fastapi = "todoo_fastapi:main"
+
+[build-system]
+requires = ["uv_build>=0.12.8,<0.13.0"]
+build-backend = "uv_build"
