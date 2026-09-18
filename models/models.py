@@ -26,4 +26,4 @@ class ModelTache(Base):
     priority = Column(String,QSLENUM(Priority))
     completed = Column(Boolean , default=False)
     # userId = Column(Integer, ForeignKey("ModelUser.id"))
-    createdAt = Column(DateTime, default=datetime.now)
+    createdAt = Column(DateTime, default=datetime.date)
