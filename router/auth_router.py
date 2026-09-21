@@ -1,4 +1,4 @@
-from fastapi import APIRouter,Body,HTTPException
+from fastapi import APIRouter,Body,HTTPException, Depends
 from starlette import status
 from database.database import db_dependency
 from models.models import ModelUser
@@ -7,7 +7,7 @@ from shemas.user_register import User_create
 from Auth.hashing import hash_password,verify_password
 from shemas.user_login import User_log
 from Auth.jwtoken import create_access_token
-
+from fastapi.security import OAuth2PasswordRequestForm
 
 router_auth = APIRouter(prefix="/Auth" , tags=["Authentification"])
 
@@ -23,9 +23,9 @@ async def register (register_user:Annotated[User_create,Body()],db:db_dependency
     return {"message":"user create with succes"}
 
 @router_auth.post("/login", status_code=status.HTTP_200_OK)
-async def login (login_user:Annotated[User_log,Body()],db:db_dependency):
+async def login (db:db_dependency, login_user:Annotated[OAuth2PasswordRequestForm, Depends()]):
     
-    db_user = db.query(ModelUser).filter(ModelUser.email == login_user.email).first()
+    db_user = db.query(ModelUser).filter(ModelUser.email == login_user.username).first()
     if not db_user or not verify_password(login_user.password , db_user.password):
         raise HTTPException(status_code=401,detail="identication invalide")
 

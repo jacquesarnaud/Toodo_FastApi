@@ -30,7 +30,7 @@ class ModelTache(Base):
     priority = Column(String,QSLENUM(Priority))
     completed = Column(Boolean , default=False)
     userId = Column(Integer, ForeignKey("User.id"))
-    createdAt = Column(DateTime, default=datetime.date)
+    createdAt = Column(DateTime, default=datetime.now)
 
 
     proprio = relationship("ModelUser", back_populates="Tasks")
