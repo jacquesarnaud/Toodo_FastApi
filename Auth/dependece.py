@@ -7,7 +7,7 @@ from fastapi.security import OAuth2PasswordBearer
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/Auth/login")
 
-def get_curent_user(db : db_dependency,token: Annotated[str,Depends(oauth2_scheme)] )->ModelUser:
+async def get_curent_user(db : db_dependency,token: Annotated[str,Depends(oauth2_scheme)] )->ModelUser:
     paylod = decode_token(token)
     if not paylod:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,detail="token invalide")

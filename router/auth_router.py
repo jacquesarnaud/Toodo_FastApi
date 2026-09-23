@@ -26,10 +26,12 @@ async def register (register_user:Annotated[User_create,Body()],db:db_dependency
 async def login (db:db_dependency, login_user:Annotated[OAuth2PasswordRequestForm, Depends()]):
     
     db_user = db.query(ModelUser).filter(ModelUser.email == login_user.username).first()
-    if not db_user or not verify_password(login_user.password , db_user.password):
-        raise HTTPException(status_code=401,detail="identication invalide")
-
-    acess_token = create_access_token({"sub":str(db_user.id), "type":"access"})
+    if not db_user :
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,detail="Incorrect username or password")
+    if not verify_password(login_user.password , db_user.password):  
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,detail="Incorrect username or password")
+    
+    acess_token = create_access_token({"sub":str(db_user.id), "token_type": "bearer"})
 
     return {"access_token":acess_token}
 

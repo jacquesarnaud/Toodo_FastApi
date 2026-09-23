@@ -8,6 +8,11 @@ class Priority(str,Enum):
     medium = "medium"
     high = "high"
 
+class Taches(BaseModel):
+    id: int
+    title:str
+    description:str | None 
+    priority:Priority
 
 class Post_ValideTaches(BaseModel):
     title:str = Field(min_lenght=2)
