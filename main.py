@@ -8,3 +8,7 @@ add_pagination(app)
 
 app.include_router(router_tache)
 app.include_router(router_auth)
+
+@app.get("/")
+async def good():
+    return {"message":"Api fonction"}
